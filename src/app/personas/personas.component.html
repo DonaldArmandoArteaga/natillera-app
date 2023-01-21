@@ -1,0 +1,82 @@
+<br>
+<div style="font-size: x-large"><b>Fecha actual:</b> {{today}}</div>
+<br>
+
+<section>
+    <button mat-raised-button (click)="openDialog()" color="primary">Agregar Persona</button>
+</section>
+
+<table mat-table [dataSource]="dataSource" multiTemplateDataRows class="mat-elevation-z8">
+    <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay">
+        <th mat-header-cell *matHeaderCellDef> {{column}} </th>
+        <td mat-cell *matCellDef="let element"> {{element[column]}} </td>
+    </ng-container>
+    <ng-container matColumnDef="expand">
+        <th mat-header-cell *matHeaderCellDef aria-label="row actions">&nbsp;</th>
+        <td mat-cell *matCellDef="let element">
+            <button mat-icon-button aria-label="expand row"
+                (click)="(expandedElement = expandedElement === element ? null : element); $event.stopPropagation()">
+                <mat-icon *ngIf="expandedElement !== element">keyboard_arrow_down</mat-icon>
+                <mat-icon *ngIf="expandedElement === element">keyboard_arrow_up</mat-icon>
+            </button>
+        </td>
+    </ng-container>
+
+    <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+    <ng-container matColumnDef="expandedDetail">
+        <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplayWithExpand.length">
+            <div class="example-element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+                <div class="example-element-diagram">
+                    <div class="example-element-name"> {{element.name}} </div>
+                </div>
+                <div class="example-element-description">
+                    <mat-divider></mat-divider>
+                    <br>
+                    <button mat-raised-button color="primary">Editar</button>
+                    <button mat-raised-button color="accent">Eliminar</button>
+                    <br><br>
+                    <mat-divider></mat-divider>
+                    <b>Descripcion:</b> {{element.description}}
+
+                    <div *ngFor="let mes of element.meses">
+                        <b>Mes:</b> {{mes.nombre}}
+                        <br>
+                        <b>Fecha Maxima pago:</b> {{mes.maximaFechaPago}}
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp; <b>Fecha pago:</b> {{mes.fechaPago}}
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp; <b>Monto Consignado:</b> {{mes.montoConsignado | currency}}
+                        <br>
+                        <div *ngIf="mes.multa">
+                            &nbsp;&nbsp;&nbsp;&nbsp; <b>Debe pagar multa?:</b> {{mes.multa}}
+                            <br>
+                            &nbsp;&nbsp;&nbsp;&nbsp; <b>Multa pagada?:</b> {{mes.pagoMulta}}
+                        </div>
+                        <div *ngFor="let polla of mes.pollas">
+                            <mat-divider></mat-divider>
+                            &nbsp;&nbsp;&nbsp;&nbsp; <b>Polla:</b> {{polla.nombre}}
+                            <br>
+                            &nbsp;&nbsp;&nbsp;&nbsp; <b>Fecha pago:</b> {{polla.fechaPago}}
+                            <br>
+                            <div *ngIf="polla.multa">
+                                &nbsp;&nbsp;&nbsp;&nbsp; <b>Debe pagar multa?:</b> {{polla.multa}}
+                                <br>
+                                &nbsp;&nbsp;&nbsp;&nbsp; <b>Multa pagada?:</b> {{polla.pagoMulta}}
+                            </div>
+
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="columnsToDisplayWithExpand"></tr>
+    <tr mat-row *matRowDef="let element; columns: columnsToDisplayWithExpand;" class="example-element-row"
+        [class.example-expanded-row]="expandedElement === element"
+        (click)="expandedElement = expandedElement === element ? null : element">
+    </tr>
+    <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+</table>

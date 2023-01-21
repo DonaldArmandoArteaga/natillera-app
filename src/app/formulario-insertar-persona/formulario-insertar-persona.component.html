@@ -1,0 +1,40 @@
+<div [formGroup]="profileForm">
+    <mat-form-field appearance="outline">
+        <mat-label>Cedula</mat-label>
+        <input matInput formControlName="cedula" placeholder="Numero de Cedula">
+        <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+    </mat-form-field>
+    <br>
+    <mat-form-field appearance="outline">
+        <mat-label>Numero Polla</mat-label>
+        <input matInput formControlName="numeroPolla" placeholder="Numero para la polla">
+        <mat-icon matSuffix>list</mat-icon>
+    </mat-form-field>
+    <br>
+    <mat-form-field appearance="outline">
+        <mat-label>Numero Celular</mat-label>
+        <input matInput formControlName="celular" placeholder="Numero del celular">
+        <mat-icon matSuffix>phonelink_ring</mat-icon>
+    </mat-form-field>
+    <br>
+    <mat-form-field appearance="outline">
+        <mat-label>Numero Cuenta</mat-label>
+        <input matInput formControlName="numeroCuenta" placeholder="Cuenta asignada">
+        <mat-icon matSuffix>label_important</mat-icon>
+    </mat-form-field>
+    <br>
+    <mat-form-field appearance="outline">
+        <mat-label>Cuenta</mat-label>
+        <input matInput formControlName="cuenta" placeholder="Cuenta asignada">
+        <mat-icon matSuffix>label_important</mat-icon>
+    </mat-form-field>
+    <br>
+    <mat-form-field appearance="outline">
+        <mat-label>Descripcion</mat-label>
+        <textarea placeholder="Descripcion de la Persona" rows="5" formControlName="descripcion" matInput></textarea>
+    </mat-form-field>
+</div>
+
+<br>
+<button mat-flat-button color="basic">Cancelar</button>
+<button mat-flat-button (click)="submit()" color="primary">Guardar</button>
